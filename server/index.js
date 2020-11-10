@@ -8,6 +8,10 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // serve the front-end
 app.use(express.static(path.join(__dirname, '..', 'build')));
 
+app.get('/hello', (_, res) => {
+  res.send('Hello from express!');
+});
+
 // start express server on port 5000
 // todo get port from environment
 const PORT = 8080

@@ -1,21 +1,21 @@
 FROM node:12
 
-WORKDIR /usr/src/app
+# copy minecraft server jar
+WORKDIR /usr/mc
+COPY minecraft_server.1.16.4.jar server.jar
 
-# copy source
-COPY . .
-
-# install react app deps
+# copy client source
+WORKDIR /usr/src/app/client
+COPY client .
 RUN npm install
+RUN npm run build
 
-# build production version of react app
-RUN npm run-script build
-
+# copy server source
 WORKDIR /usr/src/app/server
-
-# install server deps
+COPY server .
 RUN npm install
 
 EXPOSE 8080
+ENV MCLOC="/usr/mc"
 CMD node index.js
 

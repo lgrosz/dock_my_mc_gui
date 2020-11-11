@@ -4,8 +4,11 @@ import WebSocket from 'ws';
 import path, {dirname} from 'path';
 import { fileURLToPath } from 'url';
 
+import MinecraftServer from './MinecraftServer.js';
+
 const app = express();
 const server = http.createServer(app);
+const mcServer = new MinecraftServer();
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -16,12 +19,19 @@ app.get('/hello', (_, res) => {
   res.send('Hello from express!');
 });
 
-const wss = new WebSocket.Server({ server: server, path: '/echo' });
+const wss = new WebSocket.Server({ server: server, path: '/console' });
 
 wss.on('connection', (ws) => {
   console.log('Client connected.')
   ws.on('message', msg => {
-    ws.send(`[Echo]: ${msg}`);
+    switch (msg) {
+      case 'start':
+        mcServer.start();
+        break;
+      default:
+        mcServer.send(msg);
+        break;
+    }
   });
 });
 

@@ -13,7 +13,7 @@ const mcServer = new MinecraftServer();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // serve the front-end
-app.use(express.static(path.join(__dirname, '..', 'build')));
+app.use(express.static(path.join(__dirname, '../client', 'build')));
 
 app.get('/hello', (_, res) => {
   res.send('Hello from express!');

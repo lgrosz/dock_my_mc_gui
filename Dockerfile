@@ -1,5 +1,6 @@
 FROM node:12
 
+RUN apt-get update
 RUN apt-get -y install default-jre
 
 # copy minecraft server jar

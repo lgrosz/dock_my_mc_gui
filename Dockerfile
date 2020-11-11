@@ -1,5 +1,7 @@
 FROM node:12
 
+RUN apt-get -y install default-jre
+
 # copy minecraft server jar
 WORKDIR /usr/mc
 COPY minecraft_server.1.16.4.jar server.jar

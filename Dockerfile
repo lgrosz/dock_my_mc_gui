@@ -15,7 +15,9 @@ WORKDIR /usr/src/app/server
 COPY server .
 RUN npm install
 
+# ui port - DO NOT PORT FORWARD
 EXPOSE 8080
+# minecraft server port
 ENV MCLOC="/usr/mc"
 CMD node index.js
 

@@ -22,7 +22,19 @@ app.get('/hello', (_, res) => {
 const wss = new WebSocket.Server({ server: server, path: '/console' });
 
 wss.on('connection', (ws) => {
-  console.log('Client connected.')
+  // send all stored mc server logs
+  mcServer.getLogs().forEach(log => {
+    ws.send(log)
+  });
+
+  // listen to the mcserver
+  mcServer.addEventListener('stdout', s => {
+    ws.send(s);
+  });
+  mcServer.addEventListener('stderr', s => {
+    ws.send(s);
+  });
+
   ws.on('message', msg => {
     switch (msg) {
       case 'start':
